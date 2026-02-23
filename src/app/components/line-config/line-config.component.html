@@ -1,0 +1,102 @@
+<div class="page-wrapper">
+    <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="card-title">LINE Config</h1>
+                <p class="card-subtitle">ตั้งค่า Webhook สำหรับ LINE Bot</p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form (ngSubmit)="onSubmit()" #webhookForm="ngForm" class="form">
+            <!-- Channel Access Token -->
+            <div class="form-group">
+                <label class="form-label" for="channelAccessToken">
+                    Channel Access Token
+                    <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                    </span>
+                    <input id="channelAccessToken" type="text" class="form-input"
+                        placeholder="กรอก Channel Access Token" [(ngModel)]="form.channelAccessToken"
+                        name="channelAccessToken" required #tokenInput="ngModel" />
+                </div>
+                <span class="error-text" *ngIf="tokenInput.invalid && tokenInput.touched">
+                    กรุณากรอก Channel Access Token
+                </span>
+            </div>
+
+            <!-- Webhook URL -->
+            <div class="form-group">
+                <label class="form-label" for="webhookUrl">
+                    Webhook URL
+                    <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                        </svg>
+                    </span>
+                    <input id="webhookUrl" type="url" class="form-input" placeholder="https://your-domain.com/webhook"
+                        [(ngModel)]="form.webhookUrl" name="webhookUrl" required #urlInput="ngModel" />
+                </div>
+                <span class="error-text" *ngIf="urlInput.invalid && urlInput.touched">
+                    กรุณากรอก Webhook URL
+                </span>
+            </div>
+
+            <!-- Alert Messages -->
+            <div class="alert alert-success" *ngIf="successMessage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                {{ successMessage }}
+            </div>
+
+            <div class="alert alert-error" *ngIf="errorMessage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                {{ errorMessage }}
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" (click)="onReset()">
+                    รีเซ็ต
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="webhookForm.invalid || isLoading">
+                    <span class="spinner" *ngIf="isLoading"></span>
+                    <svg *ngIf="!isLoading" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    {{ isLoading ? 'กำลังบันทึก...' : 'บันทึก Webhook' }}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
