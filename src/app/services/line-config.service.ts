@@ -7,7 +7,7 @@ import { WebhookRequestDTO } from '../models/webhook-request.dto';
     providedIn: 'root'
 })
 export class LineConfigService {
-    private baseUrl = '/line-config';
+    private baseUrl = 'http://localhost:8080/line-config';
 
     constructor(private http: HttpClient) { }
 
